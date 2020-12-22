@@ -1,5 +1,6 @@
-import Link from "next/link"
-import { useRouter } from "next/router"
+import { useAuth0 } from '@auth0/auth0-react';
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 // function isActive(pathname) {
 //   return (
@@ -8,10 +9,11 @@ import { useRouter } from "next/router"
 // }
 
 const Header = () => {
-  const router = useRouter()
+  const router = useRouter();
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
   function isActive(pathname) {
-    return router.pathname === pathname
+    return router.pathname === pathname;
   }
 
   return (
@@ -27,9 +29,8 @@ const Header = () => {
         </Link>
       </div>
       <div className="right">
-        <Link href="/signup">
-          <a data-active={isActive("/signup")}>Signup</a>
-        </Link>
+        {!isAuthenticated && <button onClick={loginWithRedirect}>Log In</button>}
+        {isAuthenticated && <button onClick={() => logout({ returnTo: window.location.origin })}>Log Out</button>}
         <Link href="/create">
           <a data-active={isActive("/create")}>+ Create draft</a>
         </Link>
@@ -45,7 +46,7 @@ const Header = () => {
           font-weight: bold;
         }
 
-        a {
+        a, button {
           text-decoration: none;
           color: #000;
           display: inline-block;
@@ -55,7 +56,8 @@ const Header = () => {
           color: gray;
         }
 
-        a + a {
+        a + a,
+        button + a {
           margin-left: 1rem;
         }
 
@@ -63,14 +65,15 @@ const Header = () => {
           margin-left: auto;
         }
 
-        .right a {
+        .right a,
+        .right button {
           border: 1px solid black;
           padding: 0.5rem 1rem;
           border-radius: 3px;
         }
       `}</style>
     </nav>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

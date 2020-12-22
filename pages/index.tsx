@@ -41,15 +41,10 @@ const Post = ({ post }) => (
 
 const Blog = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
-
-  if (isLoading) {
-    return <div>Loading user ...</div>;
-  }
-
   const { loading, error, data } = useQuery(FeedQuery);
 
-  if (loading) {
-    return <div>Loading data ...</div>;
+  if (isLoading || loading) {
+    return <div>Loading ...</div>;
   }
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -67,7 +62,6 @@ const Blog = () => {
                   <Post post={post} />
                 </div>
               ))}
-            {!isAuthenticated && <LoginButton />}
           </>
         </main>
       </div>
@@ -87,18 +81,6 @@ const Blog = () => {
       `}</style>
     </Layout>
   );
-};
-
-const LoginButton = () => {
-  const { loginWithRedirect } = useAuth0();
-
-  return <button onClick={loginWithRedirect}>Log In</button>;
-};
-
-const LogoutButton = () => {
-  const { logout } = useAuth0();
-
-  return <button onClick={() => logout({ returnTo: window.location.origin })}>Log Out</button>;
 };
 
 export default withApollo(Blog);

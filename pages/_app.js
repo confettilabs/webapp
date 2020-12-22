@@ -1,14 +1,14 @@
-import React from 'react';
-import App from 'next/app';
+import React from "react";
+import App from "next/app";
 // import Head from 'next/head';
-import Router from 'next/router';
-import { Auth0Provider } from '@auth0/auth0-react';
+import Router from "next/router";
+import { Auth0Provider } from "@auth0/auth0-react";
 // import { Nav } from '../components/Nav';
 
 // import '../components/App.css';
 
 const onRedirectCallback = (appState) => {
-  Router.replace(appState?.returnTo || '/');
+  Router.replace(appState?.returnTo || "/");
 };
 
 class MyApp extends App {
@@ -22,7 +22,7 @@ class MyApp extends App {
         domain="confettilabs.eu.auth0.com"
         clientId="6v1inCnsiBF596O4wC6OI20J3QGeIqi6"
         // scope="read:users"
-        redirectUri={typeof window !== 'undefined' && window.location.origin}
+        redirectUri={typeof window !== "undefined" && window.location.origin}
         onRedirectCallback={onRedirectCallback}
       >
         {/* <Head>

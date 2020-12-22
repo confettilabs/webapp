@@ -21,7 +21,7 @@ const FeedQuery = gql`
   }
 `;
 
-const Post = ({ post }) => (
+const Post = ({ post }: { post: any }) => (
   <Link href="/p/[id]" as={`/p/${post.id}`}>
     <a>
       <h2>{post.title}</h2>
@@ -57,7 +57,7 @@ const Blog = () => {
         <main>
           <>
             {isAuthenticated &&
-              data.feed.map((post) => (
+              data.feed.map((post: any) => (
                 <div key={post.id} className="post">
                   <Post post={post} />
                 </div>

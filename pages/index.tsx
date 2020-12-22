@@ -1,8 +1,10 @@
-import Layout from "../components/Layout"
-import Link from "next/link"
-import { withApollo } from "../apollo/client"
-import gql from "graphql-tag"
-import { useQuery } from "@apollo/react-hooks"
+import Link from "next/link";
+import gql from "graphql-tag";
+import { useQuery } from "@apollo/react-hooks";
+import { useAuth0 } from "@auth0/auth0-react";
+
+import { withApollo } from "../apollo/client";
+import Layout from "../components/Layout";
 
 const FeedQuery = gql`
   query FeedQuery {
@@ -17,7 +19,7 @@ const FeedQuery = gql`
       }
     }
   }
-`
+`;
 
 const Post = ({ post }) => (
   <Link href="/p/[id]" as={`/p/${post.id}`}>
@@ -35,28 +37,38 @@ const Post = ({ post }) => (
       `}</style>
     </a>
   </Link>
-)
+);
 
 const Blog = () => {
-  const { loading, error, data } = useQuery(FeedQuery)
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
+  if (isLoading) {
+    return <div>Loading user ...</div>;
+  }
+
+  const { loading, error, data } = useQuery(FeedQuery);
 
   if (loading) {
-    return <div>Loading ...</div>
+    return <div>Loading data ...</div>;
   }
   if (error) {
-    return <div>Error: {error.message}</div>
+    return <div>Error: {error.message}</div>;
   }
 
   return (
     <Layout>
       <div className="page">
-        <h1>My Blog</h1>
+        <h1>Confetti</h1>
         <main>
-          {data.feed.map((post) => (
-            <div key={post.id} className="post">
-              <Post post={post} />
-            </div>
-          ))}
+          <>
+            {isAuthenticated &&
+              data.feed.map((post) => (
+                <div key={post.id} className="post">
+                  <Post post={post} />
+                </div>
+              ))}
+            {!isAuthenticated && <LoginButton />}
+          </>
         </main>
       </div>
       <style jsx>{`
@@ -74,7 +86,19 @@ const Blog = () => {
         }
       `}</style>
     </Layout>
-  )
-}
+  );
+};
 
-export default withApollo(Blog)
+const LoginButton = () => {
+  const { loginWithRedirect } = useAuth0();
+
+  return <button onClick={loginWithRedirect}>Log In</button>;
+};
+
+const LogoutButton = () => {
+  const { logout } = useAuth0();
+
+  return <button onClick={() => logout({ returnTo: window.location.origin })}>Log Out</button>;
+};
+
+export default withApollo(Blog);

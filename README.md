@@ -193,7 +193,6 @@ mutation {
 
 </Details>
 
-
 ## Evolving the app
 
 Evolving the application typically requires five subsequent steps:
@@ -382,4 +381,3 @@ In the application code, you can access the new operations via Apollo Client and
 - Check out the [Prisma docs](https://www.prisma.io/docs)
 - Share your feedback in the [`prisma2`](https://prisma.slack.com/messages/CKQTGR6T0/) channel on the [Prisma Slack](https://slack.prisma.io/)
 - Create issues and ask questions on [GitHub](https://github.com/prisma/prisma/)
-

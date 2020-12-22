@@ -14,6 +14,9 @@ const PostQuery = gql`
       author {
         id
         name
+        profile {
+          bio
+        }
       }
     }
   }

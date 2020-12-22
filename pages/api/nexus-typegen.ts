@@ -50,11 +50,17 @@ export interface NexusGenObjects {
     published?: boolean | null; // Boolean
     title?: string | null; // String
   }
+  Profile: { // root type
+    bio?: string | null; // String
+    id?: string | null; // String
+    user?: string | null; // String
+  }
   Query: {};
   User: { // root type
     email?: string | null; // String
     id?: number | null; // Int
     name?: string | null; // String
+    profile?: NexusGenRootTypes['Profile'] | null; // Profile
   }
 }
 
@@ -82,6 +88,11 @@ export interface NexusGenFieldTypes {
     published: boolean | null; // Boolean
     title: string | null; // String
   }
+  Profile: { // field return type
+    bio: string | null; // String
+    id: string | null; // String
+    user: string | null; // String
+  }
   Query: { // field return type
     drafts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
     feed: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
@@ -93,6 +104,7 @@ export interface NexusGenFieldTypes {
     id: number | null; // Int
     name: string | null; // String
     posts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
+    profile: NexusGenRootTypes['Profile'] | null; // Profile
   }
 }
 
@@ -110,6 +122,11 @@ export interface NexusGenFieldTypeNames {
     published: 'Boolean'
     title: 'String'
   }
+  Profile: { // field return type name
+    bio: 'String'
+    id: 'String'
+    user: 'String'
+  }
   Query: { // field return type name
     drafts: 'Post'
     feed: 'Post'
@@ -121,6 +138,7 @@ export interface NexusGenFieldTypeNames {
     id: 'Int'
     name: 'String'
     posts: 'Post'
+    profile: 'Profile'
   }
 }
 

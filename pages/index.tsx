@@ -1,10 +1,10 @@
-import Link from "next/link";
-import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
-import { useAuth0 } from "@auth0/auth0-react";
+import Link from 'next/link';
+import gql from 'graphql-tag';
+import { useQuery } from '@apollo/react-hooks';
+import { useAuth0 } from '@auth0/auth0-react';
 
-import { withApollo } from "../apollo/client";
-import Layout from "../components/Layout";
+import { withApollo } from '../apollo/client';
+import Layout from '../components/Layout';
 
 const FeedQuery = gql`
   query FeedQuery {

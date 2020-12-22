@@ -1,6 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import Link from "next/link";
-import { useRouter } from "next/router";
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 // function isActive(pathname) {
 //   return (
@@ -20,19 +20,27 @@ const Header = () => {
     <nav>
       <div className="left">
         <Link href="/">
-          <a className="bold" data-active={isActive("/")}>
+          <a className="bold" data-active={isActive('/')}>
             Blog
           </a>
         </Link>
         <Link href="/drafts">
-          <a data-active={isActive("/drafts")}>Drafts</a>
+          <a data-active={isActive('/drafts')}>Drafts</a>
         </Link>
       </div>
       <div className="right">
-        {!isAuthenticated && <button onClick={loginWithRedirect}>Log In</button>}
-        {isAuthenticated && <button onClick={() => logout({ returnTo: window.location.origin })}>Log Out</button>}
+        {!isAuthenticated && (
+          <button type="button" onClick={loginWithRedirect}>
+            Log In
+          </button>
+        )}
+        {isAuthenticated && (
+          <button type="button" onClick={() => logout({ returnTo: window.location.origin })}>
+            Log Out
+          </button>
+        )}
         <Link href="/create">
-          <a data-active={isActive("/create")}>+ Create draft</a>
+          <a data-active={isActive('/create')}>+ Create draft</a>
         </Link>
       </div>
       <style jsx>{`
@@ -46,13 +54,14 @@ const Header = () => {
           font-weight: bold;
         }
 
-        a, button {
+        a,
+        button {
           text-decoration: none;
           color: #000;
           display: inline-block;
         }
 
-        .left a[data-active="true"] {
+        .left a[data-active='true'] {
           color: gray;
         }
 

@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from 'next';
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
-  res.status(200).send("Hello World!");
+  res.status(200).send(`Hello World!`);
 };

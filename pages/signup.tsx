@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import Layout from "../components/Layout";
-import Router from "next/router";
-import { withApollo } from "../apollo/client";
-import gql from "graphql-tag";
-import { useMutation } from "@apollo/react-hooks";
+import React, { useState } from 'react';
+import Router from 'next/router';
+import gql from 'graphql-tag';
+import { useMutation } from '@apollo/react-hooks';
+import { withApollo } from '../apollo/client';
+import Layout from '../components/Layout';
 
 const SignupMutation = gql`
   mutation SignupMutation($name: String, $email: String!) {
@@ -16,8 +16,8 @@ const SignupMutation = gql`
 `;
 
 function Signup() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState(``);
+  const [email, setEmail] = useState(``);
 
   const [signup] = useMutation(SignupMutation);
 
@@ -27,7 +27,7 @@ function Signup() {
         <form
           onSubmit={async (e) => {
             e.preventDefault();
-            console.log("submit", name, email);
+            console.log(`submit`, name, email);
 
             await signup({
               variables: {
@@ -35,14 +35,16 @@ function Signup() {
                 email,
               },
             });
-            Router.push("/");
+            Router.push(`/`);
           }}
         >
           <h1>Signup user</h1>
+          {/* eslint-disable-next-line jsx-a11y/no-autofocus */}
           <input autoFocus onChange={(e) => setName(e.target.value)} placeholder="Name" type="text" value={name} />
           <input onChange={(e) => setEmail(e.target.value)} placeholder="Email address" type="email" value={email} />
           <input disabled={!name || !email} type="submit" value="Signup" />
-          <a className="back" href="#" onClick={() => Router.push("/")}>
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+          <a className="back" href="#" onClick={() => Router.push(`/`)}>
             or Cancel
           </a>
         </form>
@@ -55,8 +57,8 @@ function Signup() {
           justify-content: center;
         }
 
-        input[type="text"],
-        input[type="email"] {
+        input[type='text'],
+        input[type='email'] {
           width: 100%;
           padding: 0.5rem;
           margin: 0.5rem 0;
@@ -64,7 +66,7 @@ function Signup() {
           border: 0.125rem solid rgba(0, 0, 0, 0.2);
         }
 
-        input[type="submit"] {
+        input[type='submit'] {
           background: #ececec;
           border: 0;
           padding: 1rem 2rem;

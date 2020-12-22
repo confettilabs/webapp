@@ -293,13 +293,21 @@ With the `nexus-prisma` package, you can expose the new `Profile` model in the A
 const User = objectType({
   name: 'User',
   definition(t) {
-    t.model.id()
-    t.model.name()
-    t.model.email()
-    t.model.posts({
-      pagination: false,
+    t.int('id')
+    t.string('name')
+    t.string('email')
+    t.list.field('posts', {
+      type: 'Post',
+      resolve: (parent) =>
+        prisma.user
+          .findUnique({
+            where: { id: Number(parent.id) },
+          })
+          .posts(),
     })
-+   t.model.profile()
++    t.field('profile', {
++      type: 'Profile',
++    })
   },
 })
 
@@ -308,16 +316,17 @@ const User = objectType({
 +const Profile = objectType({
 +  name: 'Profile',
 +  definition(t) {
-+    t.model.id()
-+    t.model.bio()
-+    t.model.user()
++    t.string('id')
++    t.string('bio')
++    t.string('user')
 +  },
 +})
 
 // ... as before
 
 export const schema = makeSchema({
-+  types: [Query, Mutation, Post, User, Profile],
+-  types: [Query, Mutation, Post, User, GQLDate],
++  types: [Query, Mutation, Post, User, GQLDate, Profile],
   // ... as before
 }
 ```

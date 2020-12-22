@@ -8,9 +8,24 @@
     "start": "next start",
     "generate": "npm -s run generate:prisma && npm -s run generate:nexus",
     "generate:prisma": "prisma generate",
-    "generate:nexus": "ts-node --transpile-only -P nexus.tsconfig.json pages/api"
+    "generate:nexus": "ts-node --transpile-only -P nexus.tsconfig.json pages/api",
+    "type-check": "tsc",
+    "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\"",
+    "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write"
   },
-  "keywords": [],
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true",
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "./src/**/*.{ts,js,jsx,tsx}": [
+      "npm run lint --fix",
+      "npm run format"
+    ]
+  },
   "author": "",
   "license": "MIT",
   "dependencies": {
@@ -35,11 +50,26 @@
     "react-markdown": "5.0.3"
   },
   "devDependencies": {
+    "@commitlint/cli": "11.0.0",
+    "@commitlint/config-conventional": "11.0.0",
     "@prisma/cli": "2.13.1",
     "@types/graphql": "14.5.0",
     "@types/graphql-iso-date": "^3.4.0",
     "@types/node": "13.13.36",
     "@types/react": "17.0.0",
+    "commitizen": "4.2.2",
+    "eslint": "7.16.0",
+    "eslint-config-airbnb": "18.2.1",
+    "eslint-config-prettier": "7.1.0",
+    "eslint-import-resolver-typescript": "2.3.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-jsx-a11y": "6.4.1",
+    "eslint-plugin-prettier": "3.3.0",
+    "eslint-plugin-react": "7.21.5",
+    "eslint-plugin-react-hooks": "4.2.0",
+    "husky": "4.3.6",
+    "lint-staged": "10.5.3",
+    "prettier": "2.2.1",
     "typescript": "4.1.3"
   }
 }
